@@ -1,10 +1,9 @@
 import { Button } from "antd"
-import React from "react"
 
 const AddTask = () => {
     return (
         <div>
-            <div>AddTask</div>
+            <div>Add task</div>
             <Button type="primary">Add task</Button>
         </div>
     )
