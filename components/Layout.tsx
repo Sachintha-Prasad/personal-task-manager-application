@@ -1,7 +1,8 @@
-import React from "react"
+import { LayoutChildrenProps } from "@/types/layout"
+import { FC } from "react"
 
-const Layout = () => {
-    return <div>Layout</div>
+const Layout: FC<LayoutChildrenProps> = ({ children }) => {
+    return <div className="main-container">{children}</div>
 }
 
 export default Layout
