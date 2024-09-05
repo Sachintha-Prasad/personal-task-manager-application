@@ -1,9 +1,9 @@
+import { Layout as AntLayout, Button, Flex, Typography } from "antd"
 import { LayoutChildrenProps } from "@/types/layout"
 import { EditOutlined } from "@ant-design/icons"
-import { Layout as AntLayout, Button, Flex } from "antd"
-import Link from "next/link"
 
 const { Header, Content } = AntLayout
+const { Link } = Typography
 
 const Layout: React.FC<LayoutChildrenProps> = ({ children }) => {
     return (
@@ -27,7 +27,13 @@ const Layout: React.FC<LayoutChildrenProps> = ({ children }) => {
                         maxWidth: 1440
                     }}
                 >
-                    <Link href="/" style={{ fontSize: 20, color: "white" }}>
+                    <Link
+                        href="/"
+                        style={{
+                            fontSize: 20,
+                            color: "white"
+                        }}
+                    >
                         Personal Task Manager
                     </Link>
                     <Link href="/add-task">
