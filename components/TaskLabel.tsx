@@ -10,7 +10,7 @@ const tagStyle = {
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-start",
-    maxWidth: 120,
+    width: "100%",
     borderRadius: "120px",
     gap: 4
 }
