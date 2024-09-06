@@ -1,5 +1,5 @@
 import { Layout as AntLayout, Button, Flex, Typography } from "antd"
-import { LayoutChildrenProps } from "@/types/layout"
+import { ChildrenProp } from "@/types/childrenProp"
 import { EditOutlined } from "@ant-design/icons"
 import { useState } from "react"
 import AddTask from "@/pages/add-task"
@@ -7,7 +7,7 @@ import AddTask from "@/pages/add-task"
 const { Header, Content } = AntLayout
 const { Link } = Typography
 
-const Layout: React.FC<LayoutChildrenProps> = ({ children }) => {
+const Layout: React.FC<ChildrenProp> = ({ children }) => {
     const [isDrawerOpen, setDrawerOpen] = useState(false)
     const handleDrawer = () => {
         setDrawerOpen((prev) => !prev)
