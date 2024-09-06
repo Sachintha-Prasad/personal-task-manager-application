@@ -1,22 +1,5 @@
-import Layout from "@/components/Layout"
-import { InfoCircleOutlined } from "@ant-design/icons"
-import {
-    Button,
-    DatePicker,
-    Drawer,
-    Flex,
-    Form,
-    Input,
-    Radio,
-    Select,
-    Space,
-    Typography
-} from "antd"
-import { useState } from "react"
-import { redirect } from "next/navigation"
+import { Drawer } from "antd"
 import TaskForm from "@/components/TaskForm"
-
-const { Title } = Typography
 
 type AddTaskProps = { open: boolean; click: () => void }
 

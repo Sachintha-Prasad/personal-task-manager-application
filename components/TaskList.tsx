@@ -1,5 +1,13 @@
-import { Button, Dropdown, Popconfirm, Space, Table, Typography } from "antd"
-import React, { useState } from "react"
+import {
+    Button,
+    Popconfirm,
+    Select,
+    SelectProps,
+    Space,
+    Table,
+    Typography
+} from "antd"
+import React, { useEffect, useState } from "react"
 import { Task } from "@/types/task"
 import {
     DeleteOutlined,
@@ -8,24 +16,23 @@ import {
 } from "@ant-design/icons"
 import { taskStatus } from "@/util/taskStatus"
 import { dateFormat } from "@/util/dateFormat"
-import { MenuProps } from "antd"
 
 const { Column } = Table
 const { Text } = Typography
 
 const TaskList: React.FC = () => {
-    const items: MenuProps["items"] = [
+    const priorityOptions: SelectProps["options"] = [
         {
-            key: "1",
-            label: "Low"
+            label: "Low",
+            value: "Low"
         },
         {
-            key: "2",
-            label: "Medium"
+            label: "Medium",
+            value: "Medium"
         },
         {
-            key: "3",
-            label: "High"
+            label: "High",
+            value: "High"
         }
     ]
 
@@ -58,6 +65,21 @@ const TaskList: React.FC = () => {
         setTaskList(newData)
     }
 
+    const handleChange = (value: { value: string; label: React.ReactNode }) => {
+        console.log(value)
+    }
+
+    useEffect(() => {
+        const fetchTasks = async () => {
+            const response = await fetch("api/tasks")
+            const data = await response.json()
+
+            console.log(data)
+        }
+
+        fetchTasks()
+    }, [])
+
     return (
         <Table dataSource={taskList} bordered>
             <Column title="Task" dataIndex="task" key="task" />
@@ -78,14 +100,15 @@ const TaskList: React.FC = () => {
                 dataIndex="priority"
                 key="priority"
                 render={() => (
-                    <Dropdown menu={{ items }} trigger={["click"]}>
-                        <a onClick={(e) => e.preventDefault()}>
-                            <Space>
-                                Set Priority Level
-                                <DownOutlined />
-                            </Space>
-                        </a>
-                    </Dropdown>
+                    <Select
+                        defaultValue={{ value: "low", label: "Low" }}
+                        onChange={handleChange}
+                        style={{
+                            width: "100%",
+                            maxWidth: 120
+                        }}
+                        options={priorityOptions}
+                    />
                 )}
             />
             <Column
