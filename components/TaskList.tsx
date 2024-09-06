@@ -3,36 +3,34 @@ import {
     Popconfirm,
     Select,
     SelectProps,
-    Space,
     Table,
     Typography
 } from "antd"
 import React, { useEffect, useState } from "react"
 import { Task } from "@/types/task"
-import {
-    DeleteOutlined,
-    DownOutlined,
-    QuestionCircleOutlined
-} from "@ant-design/icons"
-import { taskStatus } from "@/util/taskStatus"
+import { DeleteOutlined, QuestionCircleOutlined } from "@ant-design/icons"
 import { dateFormat } from "@/util/dateFormat"
+import PriorityLabel from "./PriorityLabel"
+import TaskLabel from "./TaskLabel"
 
 const { Column } = Table
 const { Text } = Typography
 
-const TaskList: React.FC = () => {
+type priorityProps = { value: string; label: React.ReactNode }
+
+const TaskList = () => {
     const priorityOptions: SelectProps["options"] = [
         {
-            label: "Low",
-            value: "Low"
+            label: <PriorityLabel type={"low"} />,
+            value: "low"
         },
         {
-            label: "Medium",
-            value: "Medium"
+            label: <PriorityLabel type={"medium"} />,
+            value: "medium"
         },
         {
-            label: "High",
-            value: "High"
+            label: <PriorityLabel type={"high"} />,
+            value: "high"
         }
     ]
 
@@ -41,21 +39,21 @@ const TaskList: React.FC = () => {
             key: "1",
             task: "Complete the home works",
             status: "pending",
-            priority: "Low",
+            priority: "low",
             dueDate: new Date("2024-09-03")
         },
         {
             key: "2",
             task: "Clean the room",
             status: "completed",
-            priority: "Low",
+            priority: "medium",
             dueDate: null
         },
         {
             key: "3",
             task: "Watch a new movie",
             status: "pending",
-            priority: "Low",
+            priority: "low",
             dueDate: null
         }
     ])
@@ -63,10 +61,6 @@ const TaskList: React.FC = () => {
     const handleDelete = (key: React.Key) => {
         const newData = taskList.filter((item) => item.key !== key)
         setTaskList(newData)
-    }
-
-    const handleChange = (value: { value: string; label: React.ReactNode }) => {
-        console.log(value)
     }
 
     useEffect(() => {
@@ -87,7 +81,9 @@ const TaskList: React.FC = () => {
                 title="Status"
                 dataIndex="status"
                 key="status"
-                render={(status: string) => taskStatus(status)}
+                render={(status: "pending" | "completed") => (
+                    <TaskLabel status={status} />
+                )}
             />
             <Column
                 title="Due Date"
@@ -99,13 +95,15 @@ const TaskList: React.FC = () => {
                 title="Priority"
                 dataIndex="priority"
                 key="priority"
-                render={() => (
+                render={(priority: "low" | "medium" | "high") => (
                     <Select
-                        defaultValue={{ value: "low", label: "Low" }}
-                        onChange={handleChange}
+                        defaultValue={{
+                            value: priority,
+                            label: <PriorityLabel type={priority} />
+                        }}
                         style={{
                             width: "100%",
-                            maxWidth: 120
+                            maxWidth: 140
                         }}
                         options={priorityOptions}
                     />

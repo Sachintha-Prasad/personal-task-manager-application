@@ -3,5 +3,5 @@ export interface Task {
     task: string
     status: "pending" | "completed"
     dueDate: Date | null
-    priority: string
+    priority: "low" | "medium" | "high"
 }

@@ -1,7 +1,7 @@
 import { Button, DatePicker, Form, Input, Select } from "antd"
-import React, { FC, FormEvent } from "react"
+import React from "react"
 
-const TaskForm: React.FC = () => {
+const TaskForm = () => {
     const [form] = Form.useForm()
 
     const handleChange = (value: { value: string; label: React.ReactNode }) => {
