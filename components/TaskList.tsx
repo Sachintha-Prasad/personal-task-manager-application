@@ -1,11 +1,4 @@
-import {
-    Button,
-    Popconfirm,
-    Select,
-    SelectProps,
-    Table,
-    Typography
-} from "antd"
+import { Button, Checkbox, Popconfirm, Select, Table } from "antd"
 import React, { useEffect, useState } from "react"
 import { Task } from "@/types/task"
 import { DeleteOutlined, QuestionCircleOutlined } from "@ant-design/icons"
@@ -14,87 +7,75 @@ import PriorityLabel from "./PriorityLabel"
 import TaskLabel from "./TaskLabel"
 
 const { Column } = Table
-const { Text } = Typography
-
-type priorityProps = { value: string; label: React.ReactNode }
 
 const TaskList = () => {
-    const priorityOptions: SelectProps["options"] = [
-        {
-            label: <PriorityLabel type={"low"} />,
-            value: "low"
-        },
-        {
-            label: <PriorityLabel type={"medium"} />,
-            value: "medium"
-        },
-        {
-            label: <PriorityLabel type={"high"} />,
-            value: "high"
-        }
-    ]
-
-    const [taskList, setTaskList] = useState<Task[]>([
-        {
-            key: "1",
-            task: "Complete the home works",
-            status: "pending",
-            priority: "low",
-            dueDate: new Date("2024-09-03")
-        },
-        {
-            key: "2",
-            task: "Clean the room",
-            status: "completed",
-            priority: "medium",
-            dueDate: null
-        },
-        {
-            key: "3",
-            task: "Watch a new movie",
-            status: "pending",
-            priority: "low",
-            dueDate: null
-        }
-    ])
+    const [taskList, setTaskList] = useState<Task[]>([])
 
     const handleDelete = (key: React.Key) => {
-        const newData = taskList.filter((item) => item.key !== key)
-        setTaskList(newData)
+        const updatedTasks: Task[] = taskList.filter((item) => item.key !== key)
+        setTaskList(updatedTasks)
+    }
+
+    const handleTaskStatusChange = (key: React.Key, checked: boolean) => {
+        const updatedTasks: Task[] = taskList.map((task) =>
+            task.key === key
+                ? { ...task, status: checked ? "completed" : "pending" }
+                : task
+        )
+        setTaskList(updatedTasks)
     }
 
     useEffect(() => {
         const fetchTasks = async () => {
             const response = await fetch("api/tasks")
             const data = await response.json()
-
             console.log(data)
+            setTaskList(data)
         }
 
         fetchTasks()
     }, [])
 
     return (
-        <Table dataSource={taskList} bordered>
+        <Table dataSource={taskList} style={{ borderRadius: 24 }} bordered>
+            <Column
+                title=""
+                width={40}
+                render={(record: Task) => (
+                    <Checkbox
+                        checked={record.status === "completed"}
+                        onChange={(e) =>
+                            handleTaskStatusChange(record.key, e.target.checked)
+                        }
+                    />
+                )}
+            />
+
             <Column title="Task" dataIndex="task" key="task" />
+
             <Column
                 title="Status"
                 dataIndex="status"
                 key="status"
+                width={160}
                 render={(status: "pending" | "completed") => (
                     <TaskLabel status={status} />
                 )}
             />
+
             <Column
                 title="Due Date"
                 dataIndex="dueDate"
                 key="dueDate"
+                width={160}
                 render={(dueDate: Date | null) => dateFormat(dueDate)}
             />
+
             <Column
                 title="Priority"
                 dataIndex="priority"
                 key="priority"
+                width={160}
                 render={(priority: "low" | "medium" | "high") => (
                     <Select
                         defaultValue={{
@@ -105,13 +86,28 @@ const TaskList = () => {
                             width: "100%",
                             maxWidth: 140
                         }}
-                        options={priorityOptions}
+                        options={[
+                            {
+                                label: <PriorityLabel type={"low"} />,
+                                value: "low"
+                            },
+                            {
+                                label: <PriorityLabel type={"medium"} />,
+                                value: "medium"
+                            },
+                            {
+                                label: <PriorityLabel type={"high"} />,
+                                value: "high"
+                            }
+                        ]}
                     />
                 )}
             />
+
             <Column
                 title=""
                 key="action"
+                width={40}
                 render={(record: Task) => (
                     <Popconfirm
                         title="Delete the task"
