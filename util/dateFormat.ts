@@ -1,2 +1,2 @@
 export const dateFormat = (date: Date | null): String =>
-    date ? date.toLocaleDateString() : "No due date"
+    date ? new Date(date).toLocaleDateString() : "No due date"
