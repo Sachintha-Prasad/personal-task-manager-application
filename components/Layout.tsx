@@ -1,11 +1,18 @@
 import { Layout as AntLayout, Button, Flex, Typography } from "antd"
 import { LayoutChildrenProps } from "@/types/layout"
 import { EditOutlined } from "@ant-design/icons"
+import { useState } from "react"
+import AddTask from "@/pages/add-task"
 
 const { Header, Content } = AntLayout
 const { Link } = Typography
 
 const Layout: React.FC<LayoutChildrenProps> = ({ children }) => {
+    const [isDrawerOpen, setDrawerOpen] = useState(false)
+    const handleDrawer = () => {
+        setDrawerOpen((prev) => !prev)
+    }
+
     return (
         <AntLayout style={{ backgroundColor: "white" }}>
             <Header
@@ -36,11 +43,10 @@ const Layout: React.FC<LayoutChildrenProps> = ({ children }) => {
                     >
                         Personal Task Manager
                     </Link>
-                    <Link href="/add-task">
-                        <Button type="primary">
-                            Add Task <EditOutlined />
-                        </Button>
-                    </Link>
+
+                    <Button type="primary" onClick={handleDrawer}>
+                        Add Task <EditOutlined />
+                    </Button>
                 </Flex>
             </Header>
 
@@ -59,6 +65,7 @@ const Layout: React.FC<LayoutChildrenProps> = ({ children }) => {
                         borderRadius: 8
                     }}
                 >
+                    <AddTask open={isDrawerOpen} click={handleDrawer} />
                     {children}
                 </div>
             </Content>

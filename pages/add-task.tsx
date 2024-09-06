@@ -3,6 +3,7 @@ import { InfoCircleOutlined } from "@ant-design/icons"
 import {
     Button,
     DatePicker,
+    Drawer,
     Flex,
     Form,
     Input,
@@ -17,14 +18,19 @@ import TaskForm from "@/components/TaskForm"
 
 const { Title } = Typography
 
-const AddTask = () => {
+type AddTaskProps = { open: boolean; click: () => void }
+
+const AddTask = ({ open, click }: AddTaskProps) => {
     return (
-        <Layout>
-            <Flex vertical align="center" style={{ width: "100%" }}>
-                <Title level={4}>Create a Task</Title>
-                <TaskForm />
-            </Flex>
-        </Layout>
+        <Drawer
+            title="Add a new task"
+            placement="right"
+            width={500}
+            onClose={click}
+            open={open}
+        >
+            <TaskForm />
+        </Drawer>
     )
 }
 
