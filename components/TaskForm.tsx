@@ -1,14 +1,23 @@
 import { Task } from "@/types/task"
-import { dateFormat } from "@/util/dateFormat"
 import { Button, DatePicker, Form, Input, message, Select } from "antd"
+import dayjs from "dayjs"
 import React from "react"
 import { v4 as taskId } from "uuid"
 
 const TaskForm = () => {
     const [form] = Form.useForm()
 
+    const saveTaskToLocalStorage = (tasksList: Task[]) => {
+        localStorage.setItem("tasksList", JSON.stringify(tasksList))
+    }
+
+    const getTasksFromLocalStorage = (): Task[] => {
+        const storedTasksList = localStorage.getItem("tasksList")
+        return storedTasksList ? JSON.parse(storedTasksList) : []
+    }
+
     const handleSubmit = async (values: any) => {
-        const taskData: Task = {
+        const newTaskData: Task = {
             key: taskId(),
             task: values.task,
             status: "pending",
@@ -16,25 +25,10 @@ const TaskForm = () => {
             dueDate: values.dueDate ? values.dueDate : null
         }
 
-        try {
-            const response = await fetch("/api/tasks", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(taskData)
-            })
+        const tasksList: Task[] = getTasksFromLocalStorage()
+        saveTaskToLocalStorage([...tasksList, newTaskData])
 
-            if (response.ok) {
-                message.success("Task added successfully!")
-                form.resetFields()
-            } else {
-                message.error("Failed to add task")
-            }
-        } catch (error) {
-            message.error("An error occurred while adding the task")
-        }
-
+        message.success("Task added successfully!")
         form.resetFields()
     }
 
@@ -73,7 +67,7 @@ const TaskForm = () => {
                     { required: true, message: "Please select a due date" }
                 ]}
             >
-                <DatePicker />
+                <DatePicker minDate={dayjs(dayjs(), "YYYY-MM-DD")} />
             </Form.Item>
 
             <Form.Item>
