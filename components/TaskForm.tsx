@@ -16,24 +16,24 @@ const TaskForm = () => {
             dueDate: values.dueDate ? values.dueDate : null
         }
 
-        // try {
-        //     const response = await fetch("/api/tasks", {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json"
-        //         },
-        //         body: JSON.stringify(taskData)
-        //     })
+        try {
+            const response = await fetch("/api/tasks", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(taskData)
+            })
 
-        //     if (response.ok) {
-        //         message.success("Task added successfully!")
-        //         form.resetFields()
-        //     } else {
-        //         message.error("Failed to add task")
-        //     }
-        // } catch (error) {
-        //     message.error("An error occurred while adding the task")
-        // }
+            if (response.ok) {
+                message.success("Task added successfully!")
+                form.resetFields()
+            } else {
+                message.error("Failed to add task")
+            }
+        } catch (error) {
+            message.error("An error occurred while adding the task")
+        }
 
         form.resetFields()
     }
