@@ -1,9 +1,6 @@
 import Layout from "@/components/Layout"
 import Head from "next/head"
-import { Typography } from "antd"
 import TaskList from "@/components/TaskList"
-
-const { Title } = Typography
 
 export default function Home() {
     return (
@@ -24,7 +21,6 @@ export default function Home() {
             <main>
                 <Layout>
                     <div>
-                        <Title level={4}>Task List</Title>
                         <TaskList />
                     </div>
                 </Layout>

@@ -2,8 +2,6 @@ import React from "react"
 import { Tag, Typography } from "antd"
 import { CheckCircleOutlined, ClockCircleOutlined } from "@ant-design/icons"
 
-const { Text } = Typography
-
 type TaskLabelProp = { status: "pending" | "completed" }
 
 const tagStyle = {
@@ -19,7 +17,9 @@ const TaskLabel = ({ status }: TaskLabelProp) => {
     if (status === "pending") {
         return (
             <Tag color={"blue"} icon={<ClockCircleOutlined />} style={tagStyle}>
-                <Text style={{ color: "blue" }}>Pending</Text>
+                <Typography.Text style={{ color: "blue" }}>
+                    Pending
+                </Typography.Text>
             </Tag>
         )
     } else if (status === "completed") {
@@ -29,7 +29,9 @@ const TaskLabel = ({ status }: TaskLabelProp) => {
                 icon={<CheckCircleOutlined />}
                 style={tagStyle}
             >
-                <Text style={{ color: "green" }}>Completed</Text>
+                <Typography.Text style={{ color: "green" }}>
+                    Completed
+                </Typography.Text>
             </Tag>
         )
     }

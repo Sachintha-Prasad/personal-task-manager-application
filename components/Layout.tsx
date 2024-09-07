@@ -4,9 +4,6 @@ import { EditOutlined } from "@ant-design/icons"
 import { useState } from "react"
 import AddTask from "@/pages/add-task"
 
-const { Header, Content } = AntLayout
-const { Link } = Typography
-
 const Layout: React.FC<ChildrenProp> = ({ children }) => {
     const [isDrawerOpen, setDrawerOpen] = useState(false)
     const handleDrawer = () => {
@@ -15,7 +12,7 @@ const Layout: React.FC<ChildrenProp> = ({ children }) => {
 
     return (
         <AntLayout style={{ backgroundColor: "white" }}>
-            <Header
+            <AntLayout.Header
                 style={{
                     display: "flex",
                     alignItems: "center",
@@ -34,7 +31,7 @@ const Layout: React.FC<ChildrenProp> = ({ children }) => {
                         maxWidth: 1440
                     }}
                 >
-                    <Link
+                    <Typography.Link
                         href="/"
                         style={{
                             fontSize: 20,
@@ -42,15 +39,15 @@ const Layout: React.FC<ChildrenProp> = ({ children }) => {
                         }}
                     >
                         Personal Task Manager
-                    </Link>
+                    </Typography.Link>
 
                     <Button type="primary" onClick={handleDrawer}>
                         Add Task <EditOutlined />
                     </Button>
                 </Flex>
-            </Header>
+            </AntLayout.Header>
 
-            <Content
+            <AntLayout.Content
                 style={{
                     padding: "0 48px",
                     margin: "24px auto",
@@ -68,7 +65,7 @@ const Layout: React.FC<ChildrenProp> = ({ children }) => {
                     <AddTask open={isDrawerOpen} click={handleDrawer} />
                     {children}
                 </div>
-            </Content>
+            </AntLayout.Content>
         </AntLayout>
     )
 }
