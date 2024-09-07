@@ -1,4 +1,8 @@
 import { Task } from "@/types/task"
+import {
+    getTasksFromLocalStorage,
+    saveTaskToLocalStorage
+} from "@/util/localStorageFunctions"
 import { Button, DatePicker, Form, Input, message, Select } from "antd"
 import dayjs from "dayjs"
 import React from "react"
@@ -6,15 +10,6 @@ import { v4 as taskId } from "uuid"
 
 const TaskForm = () => {
     const [form] = Form.useForm()
-
-    const saveTaskToLocalStorage = (tasksList: Task[]) => {
-        localStorage.setItem("tasksList", JSON.stringify(tasksList))
-    }
-
-    const getTasksFromLocalStorage = (): Task[] => {
-        const storedTasksList = localStorage.getItem("tasksList")
-        return storedTasksList ? JSON.parse(storedTasksList) : []
-    }
 
     const handleSubmit = async (values: any) => {
         const newTaskData: Task = {
