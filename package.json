@@ -12,6 +12,7 @@
         "@ant-design/cssinjs": "^1.21.1",
         "@ant-design/icons": "^5.4.0",
         "antd": "^5.20.5",
+        "dayjs": "^1.11.13",
         "next": "13.4.7",
         "next-transpile-modules": "^10.0.1",
         "react": "^18",
