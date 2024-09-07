@@ -1,12 +1,25 @@
-import { Button, Checkbox, Popconfirm, Select, Table } from "antd"
+import {
+    Button,
+    Checkbox,
+    Empty,
+    Popconfirm,
+    Select,
+    Table,
+    Typography
+} from "antd"
 import React, { useEffect, useState } from "react"
 import { Task } from "@/types/task"
-import { DeleteOutlined, QuestionCircleOutlined } from "@ant-design/icons"
+import {
+    DeleteOutlined,
+    PlusCircleOutlined,
+    QuestionCircleOutlined
+} from "@ant-design/icons"
 import { dateFormat } from "@/util/dateFormat"
 import PriorityLabel from "./PriorityLabel"
 import TaskLabel from "./TaskLabel"
 
 const { Column } = Table
+const { Text } = Typography
 
 const TaskList = () => {
     const [taskList, setTaskList] = useState<Task[]>([])
@@ -37,7 +50,32 @@ const TaskList = () => {
     }, [])
 
     return (
-        <Table dataSource={taskList} style={{ borderRadius: 24 }} bordered>
+        <Table
+            //locale is used to show things when the table is empty
+            locale={{
+                emptyText: () => (
+                    <Empty
+                        image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+                        imageStyle={{ height: 60 }}
+                        description={
+                            <Text>
+                                Currently! There are no tasks. Please add new
+                                tasks.
+                            </Text>
+                        }
+                    >
+                        <Button type="dashed">
+                            <PlusCircleOutlined />
+                            Add Task{" "}
+                        </Button>
+                    </Empty>
+                )
+            }}
+            // loading={{ delay: 3 }}
+            dataSource={taskList}
+            style={{ borderRadius: 24 }}
+            bordered
+        >
             <Column
                 title=""
                 width={40}
