@@ -16,7 +16,7 @@ const TaskForm = () => {
             key: taskId(),
             task: values.task,
             status: "pending",
-            priority: values.priority || "low",
+            priority: values.priority ? values.priority : "low",
             dueDate: values.dueDate ? values.dueDate : null
         }
 
@@ -31,6 +31,7 @@ const TaskForm = () => {
         <Form
             form={form}
             layout="vertical"
+            initialValues={{ priority: "low" }}
             onFinish={handleSubmit}
             style={{ maxWidth: 600, width: "100%" }}
         >
@@ -46,7 +47,6 @@ const TaskForm = () => {
 
             <Form.Item label="Priority" name="priority">
                 <Select
-                    defaultValue={{ value: "low", label: "Low" }}
                     options={[
                         { value: "low", label: "Low" },
                         { value: "medium", label: "Medium" },
